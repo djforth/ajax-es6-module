@@ -220,6 +220,7 @@ describe('Ajax calls', function() {
     describe('when adding headers', function() {
       let meta;
       beforeEach(function () {
+        meta = createEl.createElement(document.head, {name:"csrf-param", content:"param-data"}, "meta");
         meta = createEl.createElement(document.head, {name:"csrf-token", content:"token-data"}, "meta");
 
         ajaxCall.headers = [];
@@ -229,7 +230,7 @@ describe('Ajax calls', function() {
 
         ajaxCall.getCSRF();
         expect(ajaxCall.headers.length).toEqual(1);
-        expect(ajaxCall.headers).toContain({header:'X-CSRF-Token', value:"token-data"});
+        expect(ajaxCall.headers).toContain({header:'param-data', value:"token-data"});
       });
 
       it("should add other header if object", function() {
@@ -467,6 +468,8 @@ describe('Ajax calls', function() {
       describe('check ajax response for update (Full stack test)', function() {
         beforeEach(function() {
           spyOn(ajaxCall, "addID").and.returnValue('/api/test/1.json');
+          ajaxCall.param = "data-param";
+          ajaxCall.token = "data-token";
           server = sinon.fakeServer.create();
         });
 

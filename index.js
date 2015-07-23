@@ -68,8 +68,11 @@ var AjaxPromises = (function () {
     value: function destroy(id, progress) {
       //Destroy Record
       this.state = "DELETE";
+      this.getCSRF();
+      var del = { _method: "delete" };
+      del[this.param.content] = this.token.content;
       return new Promise((function (resolve, reject) {
-        this.getRequest(resolve, reject, progress, null, id);
+        this.getRequest(resolve, reject, progress, del, id);
       }).bind(this));
     }
   }, {
@@ -87,9 +90,10 @@ var AjaxPromises = (function () {
 
     // For Rails Authentication
     value: function getCSRF() {
-      var token = document.querySelector("meta[name=csrf-token]");
-      if (token) {
-        this.headers.push({ header: "X-CSRF-Token", value: token.content });
+      this.token = document.querySelector("meta[name=csrf-token]");
+      this.param = document.querySelector("meta[name=csrf-param]");
+      if (this.token) {
+        this.headers.push({ header: this.param.content, value: this.token.content });
       }
     }
   }, {
