@@ -540,6 +540,7 @@ describe('Ajax calls', function() {
 
       it("should set the correct request", function() {
         spyOn(ajaxCall, "getRequest");
+
         spyOn(ajaxCall, "getID").and.returnValue(1);
         let promise = ajaxCall.destroy(1, progress);
 
@@ -555,6 +556,7 @@ describe('Ajax calls', function() {
       describe('check ajax response for destroy (Full stack test)', function() {
         beforeEach(function() {
           spyOn(ajaxCall, "addID").and.returnValue('/api/test/1.json');
+          spyOn(ajaxCall, "setHeaders")
           server = sinon.fakeServer.create();
         });
 
