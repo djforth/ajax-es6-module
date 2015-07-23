@@ -230,7 +230,7 @@ describe('Ajax calls', function() {
 
         ajaxCall.getCSRF();
         expect(ajaxCall.headers.length).toEqual(1);
-        expect(ajaxCall.headers).toContain({header:'param-data', value:"token-data"});
+        expect(ajaxCall.headers).toContain({header:'X-CSRF-Token', value:"token-data"});
       });
 
       it("should add other header if object", function() {

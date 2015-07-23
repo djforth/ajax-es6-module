@@ -69,10 +69,11 @@ var AjaxPromises = (function () {
       //Destroy Record
       this.state = "DELETE";
       this.getCSRF();
-      var del = { _method: "delete" };
-      del[this.param.content] = this.token.content;
+      this.addHeaders("X-Http-Method-Override", "delete");
+      // let delete = {_method:"delete" };
+      // delete[this.param] = this.param;
       return new Promise((function (resolve, reject) {
-        this.getRequest(resolve, reject, progress, del, id);
+        this.getRequest(resolve, reject, progress, null, id);
       }).bind(this));
     }
   }, {
@@ -90,10 +91,10 @@ var AjaxPromises = (function () {
 
     // For Rails Authentication
     value: function getCSRF() {
-      this.token = document.querySelector("meta[name=csrf-token]");
-      this.param = document.querySelector("meta[name=csrf-param]");
-      if (this.token) {
-        this.headers.push({ header: this.param.content, value: this.token.content });
+      token = document.querySelector("meta[name=csrf-token]");
+      // this.param = document.querySelector("meta[name=csrf-param]")
+      if (token) {
+        this.headers.push({ header: "X-CSRF-Token", value: token.content });
       }
     }
   }, {
