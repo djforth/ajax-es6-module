@@ -582,7 +582,7 @@ describe('Ajax calls', function() {
 
     });
 
-
+    // Need to fix
     xdescribe('check ajax response for destroy (Full stack test)', function() {
       beforeEach(function() {
         spyOn(ajaxCall, "addID").and.returnValue('/api/test/1.json');
