@@ -21,10 +21,16 @@ var AjaxPromises = (function () {
   }
 
   _createClass(AjaxPromises, [{
+    key: "addRailsJSHeader",
+    value: function addRailsJSHeader() {
+      this.addHeaders([{ header: "Content-type", value: "application/json" }, { header: "accept", value: "*/*;q=0.5, text/javascript, application/javascript, application/ecmascript, application/x-ecmascript" }]);
+    }
+  }, {
     key: "addHeaders",
 
     // Stores headers
     value: function addHeaders(token) {
+
       if (_.isArray(token)) {
         this.headers = _.union(token, this.headers);
       } else {
@@ -67,13 +73,17 @@ var AjaxPromises = (function () {
     // Rails Restful API - DESTROY
     value: function destroy(id, progress) {
       //Destroy Record
-      this.state = "DELETE";
-      this.getCSRF();
-      this.addHeaders("X-Http-Method-Override", "delete");
-      // let delete = {_method:"delete" };
-      // delete[this.param] = this.param;
+      this.state = "POST";
+      var crsf = this.getCSRF();
+      this.addRailsJSHeader();
+      //Sets up response headers for Delete
+      this.addHeaders({ header: "X-Http-Method-Override", value: "delete" });
+
+      //Sets default params for DELETE
+      var del = { _method: "delete" };
+      del[crsf.param] = crsf.token;
       return new Promise((function (resolve, reject) {
-        this.getRequest(resolve, reject, progress, null, id);
+        this.getRequest(resolve, reject, progress, del, id);
       }).bind(this));
     }
   }, {
@@ -91,11 +101,13 @@ var AjaxPromises = (function () {
 
     // For Rails Authentication
     value: function getCSRF() {
-      token = document.querySelector("meta[name=csrf-token]");
-      // this.param = document.querySelector("meta[name=csrf-param]")
+      var token = document.querySelector("meta[name=csrf-token]");
+      var param = document.querySelector("meta[name=csrf-param]");
       if (token) {
         this.headers.push({ header: "X-CSRF-Token", value: token.content });
       }
+
+      return { token: token.content, param: param.content };
     }
   }, {
     key: "getData",
@@ -119,9 +131,9 @@ var AjaxPromises = (function () {
       }
       var xhr = this.setRequest(resolve, reject, progress);
       var data = send ? JSON.stringify(send) : null;
-      // let url  = (id) ? `${this.uri}/${id}` : this.uri
-      // console.log("url", url);
       xhr.open(this.state, this.addID(id), true);
+      // xhr.responseType = "text";
+      this.setHeaders(xhr);
       xhr.send(data);
     }
   }, {
@@ -172,8 +184,8 @@ var AjaxPromises = (function () {
       if (headers) {
         this.addHeaders(headers);
       }
-
       _.forEach(this.headers, function (h) {
+        // console.log(h.header, h.value);
         xhr.setRequestHeader(h.header, h.value);
       });
     }
@@ -206,8 +218,9 @@ var AjaxPromises = (function () {
       if (_.isFunction(progress)) {
         //Set progress
         xhr.onprogress = (function () {
-
-          this.setProgress(xhr, progress);
+          if (_.isFunction(progress)) {
+            this.setProgress(xhr, progress);
+          }
         }).bind(this);
       }
 
