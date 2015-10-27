@@ -32,20 +32,24 @@ class AjaxPromises {
   }
 
   addUrl(url){
-    if(!_.isString(url)){
-      throw new Error("URL must be a string");
+    if(!_.isString(url) || !_.isFunction(url)){
+      throw new Error("URL must be a string or a function");
     }
     this.uri = url;
+    return url;
   }
 
-  constructor(url){
-    this.uri     = url || null;
+  constructor(url, rails=true){
+
+    this.uri     = (url) ? this.addUrl(url) || null;
     this.state   = "GET";
     this.data    = [];
     this.headers = [];
-    // if(document){
-    //   this.getCSRF();
-    // }
+
+    if(document && rails){
+      // this.getCSRF();
+      this.addRailsJSHeader()
+    }
     // this.getCSRF();
   }
 

@@ -1,6 +1,6 @@
 require("babelify/polyfill");
 
-const Ajax  = require('../lib/ajaxApi.es6.js');
+const Ajax  = require('../src/ajaxApi.es6.js');
 
 const sinon    = require('sinon');
 const createEl = require('./utils/createElements.es6.js');
@@ -22,7 +22,7 @@ describe('Ajax calls', function() {
     error    = jasmine.createSpy('error');
     progress = jasmine.createSpy('progress');
 
-    ajaxCall = new Ajax("/api/test.json");
+    ajaxCall = new Ajax("/api/test.json", false);
 
   });
 
