@@ -4,35 +4,23 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _ = require("lodash");
+var _ = require("lodash/core"),
+    union = require("lodash/union");
 
 var AjaxPromises = (function () {
-  function AjaxPromises(url) {
-    _classCallCheck(this, AjaxPromises);
-
-    this.uri = url || null;
-    this.state = "GET";
-    this.data = [];
-    this.headers = [];
-    // if(document){
-    //   this.getCSRF();
-    // }
-    // this.getCSRF();
-  }
-
   _createClass(AjaxPromises, [{
     key: "addRailsJSHeader",
     value: function addRailsJSHeader() {
       this.addHeaders([{ header: "Content-type", value: "application/json" }, { header: "accept", value: "*/*;q=0.5, text/javascript, application/javascript, application/ecmascript, application/x-ecmascript" }]);
     }
-  }, {
-    key: "addHeaders",
 
     // Stores headers
+  }, {
+    key: "addHeaders",
     value: function addHeaders(token) {
 
       if (_.isArray(token)) {
-        this.headers = _.union(token, this.headers);
+        this.headers = union(token, this.headers);
       } else {
         this.headers.push(token);
       }
@@ -58,7 +46,22 @@ var AjaxPromises = (function () {
       }
       this.uri = url;
     }
-  }, {
+  }]);
+
+  function AjaxPromises(url) {
+    _classCallCheck(this, AjaxPromises);
+
+    this.uri = url || null;
+    this.state = "GET";
+    this.data = [];
+    this.headers = [];
+    // if(document){
+    //   this.getCSRF();
+    // }
+    // this.getCSRF();
+  }
+
+  _createClass(AjaxPromises, [{
     key: "create",
     value: function create(data, progress) {
       this.state = "POST";
@@ -67,10 +70,10 @@ var AjaxPromises = (function () {
         this.getRequest(resolve, reject, progress, data);
       }).bind(this));
     }
-  }, {
-    key: "destroy",
 
     // Rails Restful API - DESTROY
+  }, {
+    key: "destroy",
     value: function destroy(id, progress) {
       //Destroy Record
       this.state = "POST";
@@ -86,20 +89,20 @@ var AjaxPromises = (function () {
         this.getRequest(resolve, reject, progress, del, id);
       }).bind(this));
     }
-  }, {
-    key: "fetch",
 
     // GET Request
+  }, {
+    key: "fetch",
     value: function fetch(progress) {
       this.state = "GET";
       return new Promise((function (resolve, reject) {
         this.getRequest(resolve, reject, progress);
       }).bind(this));
     }
-  }, {
-    key: "getCSRF",
 
     // For Rails Authentication
+  }, {
+    key: "getCSRF",
     value: function getCSRF() {
       var token = document.querySelector("meta[name=csrf-token]");
       var param = document.querySelector("meta[name=csrf-param]");
@@ -109,10 +112,10 @@ var AjaxPromises = (function () {
 
       return { token: token.content, param: param.content };
     }
-  }, {
-    key: "getData",
 
     // Returns current data
+  }, {
+    key: "getData",
     value: function getData() {
       return this.data;
     }
@@ -121,10 +124,10 @@ var AjaxPromises = (function () {
     value: function getID(data, id) {
       return id ? id : data.id;
     }
-  }, {
-    key: "getRequest",
 
     // Get/Sends Request
+  }, {
+    key: "getRequest",
     value: function getRequest(resolve, reject, progress, send, id) {
       if (this.url) {
         throw new Error("URL not set");
@@ -136,10 +139,10 @@ var AjaxPromises = (function () {
       this.setHeaders(xhr);
       xhr.send(data);
     }
-  }, {
-    key: "parseData",
 
     // Parses Data
+  }, {
+    key: "parseData",
     value: function parseData(data) {
       if (!_.isUndefined(data)) {
         this.data = JSON.parse(data);
@@ -147,10 +150,10 @@ var AjaxPromises = (function () {
 
       return this.data;
     }
-  }, {
-    key: "update",
 
     // Rails Restful PUT request
+  }, {
+    key: "update",
     value: function update(data, id, progress) {
       this.state = "PUT";
       // let _that = this;
@@ -158,10 +161,10 @@ var AjaxPromises = (function () {
         this.getRequest(resolve, reject, progress, data, this.getID(data, id));
       }).bind(this));
     }
-  }, {
-    key: "readyState",
 
     // Ready state for success or error
+  }, {
+    key: "readyState",
     value: function readyState(xhr, resolve, reject) {
       // console.log(xhr.responseText)
       //Error
@@ -176,10 +179,10 @@ var AjaxPromises = (function () {
         resolve(this.getData());
       }
     }
-  }, {
-    key: "setHeaders",
 
     // Sets headers for request
+  }, {
+    key: "setHeaders",
     value: function setHeaders(xhr, headers) {
       if (headers) {
         this.addHeaders(headers);
@@ -189,10 +192,10 @@ var AjaxPromises = (function () {
         xhr.setRequestHeader(h.header, h.value);
       });
     }
-  }, {
-    key: "setProgress",
 
     // Progress check
+  }, {
+    key: "setProgress",
     value: function setProgress(evt, progress) {
       if (evt.lengthComputable) {
         progress({
@@ -208,10 +211,10 @@ var AjaxPromises = (function () {
         });
       }
     }
-  }, {
-    key: "setRequest",
 
     // Creates XMLHttpRequest
+  }, {
+    key: "setRequest",
     value: function setRequest(resolve, reject, progress) {
       var xhr = new XMLHttpRequest();
 
