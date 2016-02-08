@@ -4,7 +4,7 @@ const Ajax  = require('../lib/ajaxApi.es6.js');
 
 const sinon    = require('sinon');
 const createEl = require('./utils/createElements.es6.js');
-const _        = require('lodash');
+const _        = require('lodash/core');
 
 const mockdata = [
       { "id": 1, "test": "test data" }

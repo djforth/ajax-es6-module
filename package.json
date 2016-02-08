@@ -44,10 +44,10 @@
     "karma-ie-launcher": "^0.2.0",
     "karma-ievms": "0.0.4",
     "karma-jasmine": "^0.3.6",
-    "karma-opera-launcher": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.0",
     "karma-safari-launcher": "^0.1.1",
     "karma-story-reporter": "^0.3.1",
+    "lodash": "^4.3.0",
     "phantomjs": "^1.9.17",
     "react": "^0.14.3",
     "react-jasmine": "0.1.6",
@@ -56,8 +56,8 @@
     "uglifyify": "^3.0.1",
     "watchify": "^3.2.3"
   },
-  "dependencies": {
+  "peerDependencies": {
     "immutable": "^3.7.5",
-    "lodash": "^3.10.1"
+    "lodash": "^4.3.0"
   }
 }
