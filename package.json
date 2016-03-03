@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "bundle": "browserify lib/ajaxApi.es6.js -t babelify  --stage 0 --extension=\"es6.js\" -t uglifyify --exclude babelify/polyfill --exclude lodash > dist/ajax-es6-module.min.js",
-    "bundle:es6": " babel lib/ajaxApi.es6.js --out-file index.js --source-maps --stage 0",
+    "bundle:es6": " babel lib/ajaxApi.es6.js --out-file index.js --stage 0",
     "bundle:watch": "watchify lib/ajaxApi.es6.js -t babelify  --stage 0 --extension=\"es6.js\" --exclude babelify/polyfill --exclude lodash -o dist/ajax-es6-module.js",
     "build": "npm run bundle && npm run bundle:es6",
     "lint": "eslint lib/**",
@@ -47,7 +47,7 @@
     "karma-phantomjs-launcher": "^0.2.0",
     "karma-safari-launcher": "^0.1.1",
     "karma-story-reporter": "^0.3.1",
-    "lodash": "^4.3.0",
+    "lodash": "^4.6.0",
     "phantomjs": "^1.9.17",
     "react": "^0.14.3",
     "react-jasmine": "0.1.6",
@@ -57,7 +57,6 @@
     "watchify": "^3.2.3"
   },
   "peerDependencies": {
-    "immutable": "^3.7.5",
-    "lodash": "^4.3.0"
+    "lodash": "^4.6.0"
   }
 }
