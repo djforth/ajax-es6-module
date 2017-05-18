@@ -1,6 +1,6 @@
 // require("babelify/polyfill");
 
-import Ajax from '../src/ajaxApi';
+import Ajax from '../src';
 import {createHolder, createElement} from './utils/createElements';
 import _ from 'lodash';
 
