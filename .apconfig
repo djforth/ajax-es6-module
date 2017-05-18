@@ -1,0 +1,8 @@
+{
+
+  "karma": {
+    "frameworks": ["sinon"],
+    "input": "./__tests__/ajaxApi_spec.js",
+    "plugins": ["karma-sinon"]
+  }
+}

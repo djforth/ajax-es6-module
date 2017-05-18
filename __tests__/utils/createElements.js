@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-exports.createHolder = function(id, path, el){
+export const createHolder = function(id, path, el){
   el   = el   || "div";
   path = path || document.body;
 
@@ -11,7 +11,7 @@ exports.createHolder = function(id, path, el){
 };
 
 
-exports.createElement = function(path, attrs, el){
+export const createElement = function(path, attrs, el){
   el   = el   || "div";
 
   let holder = document.createElement(el);
