@@ -1,16 +1,12 @@
-require("babelify/polyfill");
+// require("babelify/polyfill");
 
-const Ajax  = require('../lib/ajaxApi.es6.js');
-
-const sinon    = require('sinon');
-const createEl = require('./utils/createElements.es6.js');
-const _        = require('lodash');
+import Ajax from '../src/ajaxApi';
+import {createHolder, createElement} from './utils/createElements';
+import _ from 'lodash';
 
 const mockdata = [
-      { "id": 1, "test": "test data" }
-    ];
-
-
+    { "id": 1, "test": "test data" }
+  ];
 
 describe('Ajax calls', function() {
 
@@ -221,8 +217,8 @@ describe('Ajax calls', function() {
     describe('when adding headers', function() {
       let meta;
       beforeEach(function () {
-        meta = createEl.createElement(document.head, {name:"csrf-param", content:"param-data"}, "meta");
-        meta = createEl.createElement(document.head, {name:"csrf-token", content:"token-data"}, "meta");
+        meta = createElement(document.head, {name:"csrf-param", content:"param-data"}, "meta");
+        meta = createElement(document.head, {name:"csrf-token", content:"token-data"}, "meta");
 
         ajaxCall.headers = [];
       });
