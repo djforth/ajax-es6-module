@@ -7,7 +7,8 @@
   "env": {
     "production": {
       "plugins": [
-        "lodash"
+        "lodash",
+        "add-module-exports"
       ]
       , "presets": [
         ["env", {
@@ -21,7 +22,7 @@
               ]
             }
         }]
-        , 'babili'
+        , "babili"
       ]
     },
     "test": {
